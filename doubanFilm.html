@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="referrer" content="never" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
+		<script src="js/jquery.min.js" type="text/javascript"></script>
+		<script src="js/doT.min.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<ul class="nav nav-pills">
+          <li id="zhengzai"class="active"><a href="#">正在上映</a></li>
+		  <li id="jijiang" ><a href="javascript:;">即将上映</a></li>
+		  <li id="top"><a href="#">top250</a></li>
+		  <li id="european"><a href="#">欧美票房榜</a></li>
+	    </ul>
+      <div id="film">
+      </div>
+	</body>
+	
+	<script type="text/template" id="all">
+		<div class="container">
+			<div class="list-group">
+			{{ for(var i=0;it[i];i++){ }}
+				<div class="list-group-item">
+					<div class="media">
+						<div class="media-left">
+							<a href="#">
+                                 <img width="80" height="auto"  class="media-object" src="{{=it[i].images.small}}"/>                        
+                            </a>
+						  <div class="media-body">
+						  	<p class="media-heading">{{=it[i].title}}</p>
+						  	<p>评分:
+						  	  <span style="color: red;">{{=it[i].rating.average}}</span>
+						  	</p>
+						  	<p>类型:{{=it[i].genres}}</p>
+						  	<p>导演:
+						  	{{ for(var j=0;it[i].directors[j];j++){ }}
+						  	 	<span>{{=it[i].directors[j].name}}</span>
+						  	 {{}}}
+						  	</p>
+						  	<p>主演:
+						  	{{ for(var j=0;it[i].casts[j];j++){ }}
+						  	 	<span>{{=it[i].casts[j].name}}</span>
+						  	 {{}}}
+						  	</p>
+						  </div>
+						</div>
+					</div>
+				</div>
+			{{ } }}	
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		var zhengzai=document.getElementById('zhengzai');
+		var jijiang=document.getElementById('jijiang');
+		var top= document.getElementById('top');
+		var european=document.getElementById('european');
+		
+		function show (data,id) {
+		var inner = document.getElementById(id).innerText;
+		var dom = doT.template(inner)(data);
+		return dom;
+		 }
+	
+		document.getElementById('zhengzai').addEventListener('click',function(e){ 
+//			zzURL='https://api.douban.com/v2/movie/in_theaters';
+		$.get('in_theaters.json', {}, function(res) {
+         var dom= show(res.subjects,'all');
+         document.getElementById('film').innerHTML=dom;
+		}, 'json');
+	    }); 	
+	    
+	    document.getElementById('jijiang').addEventListener('click',function(e){ 
+//	    	jjURL='https://api.douban.com/v2/movie/coming_soon';
+		$.get('coming_soon.json', {}, function(res) {
+         var dom= show(res.subjects,'all');
+         document.getElementById('film').innerHTML=dom;
+		}, 'json');
+	    }); 
+	     document.getElementById('top').addEventListener('click',function(e){ 
+//	     	topURL='https://api.douban.com/v2/movie/top250';
+		$.get('top250.json', {}, function(res) {
+         var dom= show(res.subjects,'all');
+         document.getElementById('film').innerHTML=dom;
+		}, 'json');
+	    }); 
+	    document.getElementById('european').addEventListener('click',function(e){ 
+//	    	usURL='https://api.douban.com/v2/movie/us_box';
+		$.get('us_box.json', {}, function(res) {
+//			console.log(res);
+         var dom= show(res.subjects,'all');
+         document.getElementById('film').innerHTML=dom;
+		}, 'json');
+	    });    
+	    
+	</script>
+	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+</html>
