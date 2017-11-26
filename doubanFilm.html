@@ -66,31 +66,30 @@
 		 }
 	
 		document.getElementById('zhengzai').addEventListener('click',function(e){ 
-//			zzURL='https://api.douban.com/v2/movie/in_theaters';
-		$.get('in_theaters.json', {}, function(res) {
+
+		$.get('json/in_theaters.json', {}, function(res) {
          var dom= show(res.subjects,'all');
          document.getElementById('film').innerHTML=dom;
 		}, 'json');
 	    }); 	
 	    
 	    document.getElementById('jijiang').addEventListener('click',function(e){ 
-//	    	jjURL='https://api.douban.com/v2/movie/coming_soon';
-		$.get('coming_soon.json', {}, function(res) {
+
+		$.get('json/coming_soon.json', {}, function(res) {
          var dom= show(res.subjects,'all');
          document.getElementById('film').innerHTML=dom;
 		}, 'json');
 	    }); 
 	     document.getElementById('top').addEventListener('click',function(e){ 
-//	     	topURL='https://api.douban.com/v2/movie/top250';
-		$.get('top250.json', {}, function(res) {
+
+		$.get('json/top250.json', {}, function(res) {
          var dom= show(res.subjects,'all');
          document.getElementById('film').innerHTML=dom;
 		}, 'json');
 	    }); 
 	    document.getElementById('european').addEventListener('click',function(e){ 
-//	    	usURL='https://api.douban.com/v2/movie/us_box';
-		$.get('us_box.json', {}, function(res) {
-//			console.log(res);
+
+		$.get('json/us_box.json', {}, function(res) {
          var dom= show(res.subjects,'all');
          document.getElementById('film').innerHTML=dom;
 		}, 'json');
